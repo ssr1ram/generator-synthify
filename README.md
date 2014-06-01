@@ -20,7 +20,7 @@ Yeoman travels light. He didn't pack any generators when he moved in. You can th
 To install generator-synthify from npm, run:
 
 ```bash
-$ npm install -g git+https://github.com:ssr1ram/generator-synthify.git
+$ npm install -g git+https://github.com/ssr1ram/generator-synthify.git
 ```
 
 Finally, initiate the generator:
