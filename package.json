@@ -1,20 +1,17 @@
 {
   "name": "generator-synthify",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Yeoman generator",
   "license": "MIT",
   "main": "app/index.js",
   "repository": "ssr1ram/generator-synthify",
   "author": {
     "name": "S. Sriram",
-    "email": "",
+    "email": "ssriram@gmail.com",
     "url": "https://github.com/ssr1ram"
   },
   "engines": {
     "node": ">=0.10.0"
-  },
-  "scripts": {
-    "test": "mocha"
   },
   "files": [
     "app"
@@ -26,9 +23,6 @@
     "yeoman-generator": "~0.16.0",
     "chalk": "~0.4.0",
     "yosay": "^0.1.0"
-  },
-  "devDependencies": {
-    "mocha": "*"
   },
   "peerDependencies": {
     "yo": ">=1.0.0"
