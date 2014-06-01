@@ -1,0 +1,7 @@
+language: node_js
+node_js:
+  - '0.10'
+before_install:
+  - currentfolder=${PWD##*/}
+  - if [ "$currentfolder" != 'generator-synthify' ]; then cd .. && eval "mv $currentfolder generator-synthify" && cd generator-synthify; fi
+

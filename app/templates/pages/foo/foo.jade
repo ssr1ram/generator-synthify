@@ -1,0 +1,11 @@
+extends ../default/layout
+
+block content
+  h1 Hello Foo
+  h2
+    | go to &nbsp;
+    a(href='/bar') bar
+  h3
+    pre #{JSON.stringify(preloadData)}
+
+  h4 Aloha: #{preloadData["/api/foo"].aloha}
