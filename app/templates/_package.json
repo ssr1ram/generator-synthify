@@ -5,6 +5,7 @@
   "main": "app.js",
   "dependencies": {
     "express": "~4.3.2",
+    "coffee-script": "~1.7.1",
     "synthify": "git+https://github.com/ssr1ram/synthify.git"
   },
   "devDependencies": {

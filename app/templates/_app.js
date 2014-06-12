@@ -7,7 +7,9 @@ var synthoptions = {
 };
 
 synthify.doapi(app, synthoptions);
-synthify.dopages(app, synthoptions);
+synthify.doroutes(app, synthoptions);
+
+app.set('views', __dirname + '/pages');
 
 var server = app.listen(3000, function() {
         console.log('Listening on port %d', server.address().port);

@@ -68,14 +68,14 @@ var SynthifyGenerator = yeoman.generators.Base.extend({
         this.copy('api/foo/getIndex.js', 'api/foo/getIndex.js');
     }
     if (this.dopages) {
-        this.copy('pages/pages.json', 'pages/pages.json');
+        this.copy('pages/pages_back.coffee', 'pages/pages_back.coffee');
         this.copy('pages/index.jade', 'pages/index.jade');
         this.mkdir('pages/default');
         this.copy('pages/default/layout.jade', 'pages/default/layout.jade');
         this.copy('pages/bar.jade', 'pages/bar.jade');
         this.mkdir('pages/foo');
         this.copy('pages/foo/foo.jade', 'pages/foo/foo.jade');
-        this.copy('pages/foo/foo.coffee', 'pages/foo/foo.coffee');
+        this.copy('pages/foo/foo_front.coffee', 'pages/foo/foo_front.coffee');
         this.copy('pages/foo/snip.jade', 'pages/foo/snip.jade');
         this.mkdir('pages/jslib');
         this.copy('pages/jslib/libco.coffee', 'pages/jslib/libco.coffee');
