@@ -1,7 +1,7 @@
 {
   "name": "generator-synthify",
-  "version": "0.0.2",
-  "description": "Yeoman generator",
+  "version": "0.0.3",
+  "description": "Yeoman synthify generator",
   "license": "MIT",
   "main": "app/index.js",
   "repository": "ssr1ram/generator-synthify",

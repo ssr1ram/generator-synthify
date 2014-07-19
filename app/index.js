@@ -35,6 +35,18 @@ var SynthifyGenerator = yeoman.generators.Base.extend({
             name: 'dopages',
             message: 'Would you like to synthify pages?',
             default: true
+        },
+        {
+            type: 'confirm',
+            name: 'dogoogle',
+            message: 'Would you like to synthify google oauth?',
+            default: true
+        },
+        {
+            type: 'confirm',
+            name: 'dofacebook',
+            message: 'Would you like to synthify facebook oauth?',
+            default: true
         }
     ];
 
@@ -50,14 +62,23 @@ var SynthifyGenerator = yeoman.generators.Base.extend({
     if (this.doapi) {
         this.mkdir('api');
     }
+    var pkg = this.src.readJSON('_package.json');
     if (this.dopages) {
         this.mkdir('pages');
-        this.copy('_package.gulp.json', 'package.json');
+        pkg["devDependencies"] = {
+            "browserify": "~4.1.6",
+            "coffeeify": "~0.6.0",
+            "jade": "~1.3.1",
+            "jadeify": "~2.3.0",
+            "gulp": "~3.6.2",
+            "vinyl-source-stream": "~0.1.1"
+        }
+        this.dest.write('package.json', JSON.stringify(pkg, null, 2));
         this.copy('_gulpfile.js', 'gulpfile.js');
     } else {
         this.copy('_package.json', 'package.json');
     }
-    // this.copy('_bower.json', 'bower.json');
+    this.copy('_bower.json', 'bower.json');
   },
 
   projectfiles: function () {
@@ -83,7 +104,8 @@ var SynthifyGenerator = yeoman.generators.Base.extend({
     }
     this.mkdir('public');
     this.mkdir('public/js');
-    this.copy('_app.js', 'app.js');
+    this.copy('app.coffee', 'app.coffee');
+    this.copy('server.js', 'server.js');
   }
 });
 
