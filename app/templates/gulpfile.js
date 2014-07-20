@@ -4,16 +4,21 @@ var watchify = require('watchify');
 var streamify = require('gulp-streamify');
 var uglify = require('gulp-uglify');
 var rename = require('gulp-rename');
+var less = require('gulp-less');
+var watch = require('gulp-watch');
 var source = require('vinyl-source-stream');
 var fs = require('fs');
 
 var browserify_tasks = [];
 var watchify_tasks = [];
+var less_tasks = [];
+var watch_less_tasks = [];
 var resourceStack = [];
 
 config = {
     "pagesDir": "./pages",
-    "jsDir": "./public/js"
+    "jsDir": "./public/js",
+    "cssDir": "./public/css"
 }
 
 function browserify_task(page) {
@@ -54,17 +59,54 @@ function browserify_task(page) {
         return bundle()
     })
 }
+function less_task(page) {
+    var task = page.entry
+    less_tasks.push(task);
+    gulp.task(task, function () {
+        gulp.src(page.entry)
+          .pipe(less())
+          .pipe(rename(page.dest))
+          .pipe(gulp.dest(config.cssDir))
+        gulp.src(page.entry)
+          .pipe(less({compress: true}))
+          .pipe(rename(page.dest.replace('.css', '.min.css')))
+          .pipe(gulp.dest(config.cssDir))
+    });
+    watch_less_tasks.push("w_" + task);
+    gulp.task("w_" + task, function () {
+        gulp.src(page.entry)
+          .pipe(watch())
+          .pipe(less())
+          .pipe(rename(page.dest))
+          .pipe(gulp.dest(config.cssDir))
+    });
+}
 
-(function parseDir (dir) {
+function getPublicDestDir(rootDir, dir) {
+    var destdir = dir.replace(rootDir, '').replace(/^\//, '');
+    if (destdir) {
+        destdir = destdir + "/";
+    } else {
+        destdir = "";
+    }
+    return destdir
+}
+
+(function parseFront (dir) {
   var contents = fs.readdirSync(dir).sort();
   contents.forEach(function (file) {
     if ( /_front\.(js|coffee)$/.test(file) ) {
-        var page = {"entry": dir + "/" + file, "dest": file.replace("_front", "").replace('coffee', 'js')};
+        var destdir = getPublicDestDir(config.pagesDir, dir);
+        var page = {"entry": dir + "/" + file, "dest": destdir + file.replace("_front", "").replace('coffee', 'js')};
         browserify_task(page)
+    } else if ( /.(less|css)$/.test(file) ) {
+        var destdir = getPublicDestDir(config.pagesDir, dir);
+        var page = {"entry": dir + "/" + file, "dest": destdir + file.replace('less', 'css')};
+        less_task(page)
     } else {
         if (fs.statSync(dir + "/" + file).isDirectory()) {
             resourceStack.push(file);
-            parseDir(dir + '/' + file);
+            parseFront(dir + '/' + file);
             resourceStack.pop();
         }
     }
@@ -72,5 +114,5 @@ function browserify_task(page) {
 })(config.pagesDir);
 
 
-gulp.task('dev', watchify_tasks)
-gulp.task('default', browserify_tasks)
+gulp.task('dev', watchify_tasks.concat(watch_less_tasks))
+gulp.task('default', browserify_tasks.concat(less_tasks))

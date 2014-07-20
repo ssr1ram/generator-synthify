@@ -4,13 +4,11 @@ html
     block head
       title #{title}
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    // link(rel='stylesheet', href='/layouts/core.min.css?#{cacheBreaker}')
+    link(rel='stylesheet', href='/vendor/bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/vendor/font-awesome/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/css/index/index.min.css?#{cacheBreaker}')
     // link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
     // link(rel="icon", href="/favicon.ico", type="image/x-icon")
-    //if lte IE 9
-      // script(src='/layouts/ie-sucks.min.js?#{cacheBreaker}')
-    // script(src='/layouts/core.min.js?#{cacheBreaker}')
-    // link(rel='stylesheet', href='/views/index.min.css?#{cacheBreaker}')
     block neck
   body(style='background-color:#f0f0f0')
     div.navbar.navbar-default.navbar-fixed-top

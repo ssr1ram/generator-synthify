@@ -1,36 +1,17 @@
 div.navbar-header
   a.navbar-brand(href='/')
-    i.navbar-logo.fa.fa-try(style='font-size:64px;')
-  span.navbar-brand-label(style='padding-left:10px;font-size:.8em;color:#cccccc') alpha
-  button.navbar-toggle.collapsed(data-toggle='collapse', data-target='.my-navbar-collapse')
-    span.icon-bar
+    i.navbar-logo.fa.fa-bullseye(style='font-size:32px;')
 div.navbar-collapse.my-navbar-collapse.collapse
+  ul.nav.navbar-nav
+    li
+      a(href='#') Synthify
   ul.nav.navbar-nav.pull-right
     if user && user.username
       li
-        a(href="javascript:var t = encodeURIComponent(document.title);var u = encodeURIComponent(location.href);window.open('http://tje.io/news/submit?t='+t+'&u='+u);", onclick="alert('Drag bookmarklet to browser'); return false;") 
-          img(src='/media/bmarrsm.png', alt='tje.io') 
-          span tje-io
+        a(href="#") have user
       li
-        a(data-toggle='modal', data-target='#news_submit_modal', href="#") submit news
-      li
-        a(href='/help') 
+        a(href='/help')
           | help
-      li.dropdown
-        a.dropdown-toggle(data-toggle='dropdown')
-          img(src='#{imgUrlPath}/#{user.username}.jpg', style='height:20px;width:20px;border-radius:3px', onerror="$(this).attr('src', 'http://placehold.it/20x20')")
-          span(style='margin-right:5px')  #{user.username}
-          b.caret
-        ul.dropdown-menu
-          li
-            a(href='/#{user.username}')
-              |  My Profile
-          li
-            a(href='/dashboard/')
-              |  My Dashboard
-          li
-            a(href='/logout/')
-              |  Sign Out
     else
       li.dropdown
         a.dropdown-toggle(data-toggle='dropdown')
@@ -38,16 +19,13 @@ div.navbar-collapse.my-navbar-collapse.collapse
           b.caret
         ul.dropdown-menu
           li
-            a(href='/help/news/')
+            a(href='#')
               |  News
           li
-            a(href='/help/profiles/')
-              |  Profiles
+            a(href='#')
+              |  Press
           li
-            a(href='/help/pricing/')
-              |  Pricing
-          li
-            a(href='/help/about/')
+            a(href='#')
               |  About
       li: a(href='/signup/')
         i.fa.fa-user

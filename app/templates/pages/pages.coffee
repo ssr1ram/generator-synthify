@@ -1,7 +1,7 @@
 synthify = require('synthify')
 
 module.exports.getIndex = (req, res) ->
-    res.render("index.jade")
+    res.render("index/index.jade")
 
 module.exports.getFoo = (req, res) ->
     synthify.apiPreload(req, res, "/api/foo", (data) ->

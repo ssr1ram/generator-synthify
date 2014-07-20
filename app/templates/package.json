@@ -18,6 +18,8 @@
     "gulp-streamify": "*",
     "gulp-uglify": "*",
     "gulp-rename": "*",
+    "gulp-less": "*",
+    "gulp-watch": "*",
     "vinyl-source-stream": "~0.1.1"
   },
   "scripts": {
