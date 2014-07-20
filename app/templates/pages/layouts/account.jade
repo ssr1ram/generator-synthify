@@ -1,0 +1,49 @@
+doctype html
+html
+  head
+    block head
+      title #{title}
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(rel='stylesheet', href='/layouts/core.min.css?#{cacheBreaker}')
+    link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
+    link(rel="icon", href="/favicon.ico", type="image/x-icon")
+    //if lte IE 9
+      script(src='/layouts/ie-sucks.min.js?#{cacheBreaker}')
+    script(src='/layouts/core.min.js?#{cacheBreaker}')
+    link(rel='stylesheet', href='/views/account/index.min.css?#{cacheBreaker}')
+    block neck
+  body(style='background-color:#f0f0f0')
+    div.navbar.navbar-default.navbar-fixed-top
+      div.container
+        include ./navbar
+
+    div.page
+      div.container
+        block body
+
+    div.footer
+      div.container
+        div.inner
+          span.copyright.pull-right
+            |&#169; #{copyrightYear} #{copyrightName}
+          ul.links
+            li: a(href='/') Home
+            li: a(href='/contact/') Contact
+          div.clearfix
+
+    div.ajax-spinner
+      img(src='/media/ajax-pulse.gif')
+
+    if user && user.username
+      include ../views/news/news_submit
+
+    block logs
+      script(src="/vendor/loggly/loggly.tracker.js", async)
+      script
+        | var _LTracker = _LTracker || [];
+        | _LTracker.push({'logglyKey': 'f77e34d9-18b5-4bbd-8c9f-cbae05bbad31' });
+      include ./segment-io.jade
+
+    block feet
+
+    include ./ga

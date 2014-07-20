@@ -1,9 +1,14 @@
 var gulp = require('gulp');
 var browserify = require('browserify');
+var watchify = require('watchify');
+var streamify = require('gulp-streamify');
+var uglify = require('gulp-uglify');
+var rename = require('gulp-rename');
 var source = require('vinyl-source-stream');
 var fs = require('fs');
 
 var browserify_tasks = [];
+var watchify_tasks = [];
 var resourceStack = [];
 
 config = {
@@ -16,15 +21,37 @@ function browserify_task(page) {
     var entry = page.entry;
     var dest = page.dest;
     var task = page.entry
-    browserify_tasks.push(task);
-    gulp.task(task, function () {
+    browserify_tasks.push("b_" + task);
+    gulp.task("b_" + task, function () {
         var b = browserify(entry);
         b.transform('coffeeify');
         b.transform('jadeify');
-        return b
-                .bundle()
-                .pipe(source(dest))
-                .pipe(gulp.dest(config.jsDir))
+        bundle = function() {
+            b
+            .bundle()
+            .pipe(source(dest))
+            .pipe(gulp.dest(config.jsDir))
+            .pipe(streamify(uglify()))
+            .pipe(rename(dest.replace('.js', '.min.js')))
+            .pipe(gulp.dest(config.jsDir))
+
+        }
+        return bundle()
+    })
+    watchify_tasks.push("w_" + task);
+    gulp.task("w_" + task, function () {
+        var b = watchify(entry);
+        b.transform('coffeeify');
+        b.transform('jadeify');
+        bundle = function() {
+            console.log('watchifying: ' + task);
+            b
+            .bundle()
+            .pipe(source(dest))
+            .pipe(gulp.dest(config.jsDir))
+        }
+        b.on('update', bundle)
+        return bundle()
     })
 }
 
@@ -45,4 +72,5 @@ function browserify_task(page) {
 })(config.pagesDir);
 
 
+gulp.task('dev', watchify_tasks)
 gulp.task('default', browserify_tasks)

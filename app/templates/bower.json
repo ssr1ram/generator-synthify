@@ -1,0 +1,9 @@
+{
+  "name": "package",
+  "version": "0.0.0",
+  "dependencies": {
+      "bootstrap": "3.1.1",
+      "font-awesome": "4.1.0"
+  }
+}
+
