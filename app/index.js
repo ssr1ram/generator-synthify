@@ -51,21 +51,26 @@ var SynthifyGenerator = yeoman.generators.Base.extend({
     this.copy('gulpfile.js', 'gulpfile.js');
     this.copy('bowerrc', '.bowerrc');
     this.copy('bower.json', 'bower.json');
+    this.copy('gitignore', '.gitignore');
   },
 
   projectfiles: function () {
     this.copy('editorconfig', '.editorconfig');
     this.copy('jshintrc', '.jshintrc');
+    this.directory('node_modules', 'node_modules');
     this.directory('api', 'api');
+    this.directory('config', 'config');
+    this.directory('models', 'models');
     this.directory('pages', 'pages');
+    this.directory('public', 'public');
     /*
     if (this.dousers) {
         this.directory('pages/layouts', 'pages/layouts');
         this.directory('pages/login', 'pages/login');
     }
     */
+    this.copy('connect-iocache.js', 'connect-iocache.js');
     this.copy('app.coffee', 'app.coffee');
-    this.copy('config.js', 'config.js');
     this.copy('server.js', 'server.js');
   }
 });

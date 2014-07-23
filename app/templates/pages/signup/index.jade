@@ -1,54 +1,54 @@
 extends ../layouts/default
 
 block head
-  title Login
+  title Sign Up
 
 block neck
   link(rel='stylesheet', href='/css/login/index.min.css?#{cacheBreaker}')
 
 block feet
-  script(src='/js/login/index.js?#{cacheBreaker}')
+  script(src='/js/signup/index.js?#{cacheBreaker}')
 
 block body
   div.row
     div.col-sm-6
       div.page-header
-        h1 Sign In
-      if oauthTwitter || oauthGitHub || oauthFacebook || oauthLinkedIn
+        h1 Sign Up
+      div#signup
+      if oauthTwitter || oauthGitHub || oauthFacebook || oauthGoogle
+        hr
+        p Or sign up using...
         if oauthMessage
           div.alerts
             div.alert.alert-info.alert-dismissable
               button.close(type='button', data-dismiss='alert') &times;
               |#{oauthMessage}&nbsp;
               b
-                a(href='/signup/') Sign Up Here
-        div.btn-group.btn-group-justified(style='margin:40px 20px')
+                a(href='/login/') Login Here
+        div.btn-group.btn-group-justified
           if oauthTwitter
-            a.btn.btn-info(href='/login/twitter/')
+            a.btn.btn-info(href='/signup/twitter/')
               i.fa.fa-twitter.fa-lg
               |  Twitter
           if oauthGitHub
-            a.btn.btn-info(href='/login/github/')
+            a.btn.btn-info(href='/signup/github/')
               i.fa.fa-github.fa-lg
               |  GitHub
           if oauthFacebook
-            a.btn.btn-info(href='/login/facebook/')
+            a.btn.btn-info(href='/signup/facebook/')
               i.fa.fa-facebook-square.fa-lg
               |  Facebook
-          if oauthLinkedIn
-            a.btn.btn-primary.btn-lg(href='/login/linkedin/')
-              i.fa.fa-linkedin-square.fa-lg
-              |  Login with LinkedIn
-        hr
-      p Or Login with a password ...
-      div#login(style='background-color:#f0f0f0;padding:20px;border-radius:10px')
+          if oauthGoogle
+            a.btn.btn-info(href='/signup/google/')
+              i.fa.fa-google-plus-square.fa-lg
+              |  Google
     div.col-sm-6.marketing
       div.page-header
-        h1 Welcome Back
-      p.lead We've missed you :-)
-      i.fa.fa-backward.super-awesome
+        h1 Campy Benefits
+      p.lead Really, you will love it inside. It's super great!
+      i.fa.fa-thumbs-o-up.super-awesome
 
-  script(type='text/template', id='tmpl-login')
+  script(type='text/template', id='tmpl-signup')
     form
       div.alerts
         |<% _.each(errors, function(err) { %>
@@ -57,14 +57,16 @@ block body
           |<%- err %>
         |<% }); %>
       div.form-group(class!='<%- errfor.username ? "has-error" : "" %>')
-        label.control-label Username or Email:
+        label.control-label Pick a Username:
         input.form-control(type='text', name='username', value!='<%= username %>')
         span.help-block <%- errfor.username %>
+      div.form-group(class!='<%- errfor.email ? "has-error" : "" %>')
+        label.control-label Enter Your Email:
+        input.form-control(type='text', name='email', value!='<%= email %>')
+        span.help-block <%- errfor.email %>
       div.form-group(class!='<%- errfor.password ? "has-error" : "" %>')
-        label.control-label Password:
+        label.control-label Create a Password:
         input.form-control(type='password', name='password', value!='<%= password %>')
         span.help-block <%- errfor.password %>
-      div.form-actions
-        button.btn.btn-primary.btn-login(type='button') Sign In
-        |&nbsp;
-        a.btn.btn-link(href='/login/forgot/') Forget your password?
+      div.form-group
+        button.btn.btn-primary.btn-signup(type='button') Create My Account

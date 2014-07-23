@@ -6,7 +6,18 @@
   "dependencies": {
     "express": "~3.4.4",
     "coffee-script": "~1.7.1",
-    "synthify": "git+https://github.com/ssr1ram/synthify.git"
+    "synthify": "git+https://github.com/ssr1ram/synthify.git",
+    "passport": "~0.2.0",
+    "passport-local": "~0.1.6",
+    "passport-twitter": ">= 0.0.0",
+    "passport-google-oauth" : ">= 0.0.0",
+    "passport-facebook": ">= 0.0.0",
+    "passport-linkedin": ">= 0.0.0",
+    "bcrypt": "~0.7.7",
+    "cookie-sessions": ">= 0.0.0",
+    "request": ">= 0.0.0",
+    "memcached": ">= 0.0.0",
+    "parse": ">= 0.0.0"
   },
   "devDependencies": {
     "browserify": "~4.1.6",

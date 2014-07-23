@@ -1,10 +1,11 @@
 express = require('express')
 synthify = require('synthify')
-config = require('./config')
+passport = require('passport')
+config = require('./config/config')
+iocacheStore = require('./connect-iocache')(express)
 
 app = express()
 
-synthoptions = { }
 
 cacheBreaker = new Date().getTime()
 
@@ -13,6 +14,24 @@ app.use( (req, res, next) ->
     next()
 )
 
+# app.sessionStore = new parseStore({ appid: config.parse.appid, jskey: config.parse.jskey })
+app.sessionStore = new iocacheStore({ hosts: config.iocache_hosts, token: config.iocache_token, project_id: config.iocache_project_id, cache_name: config.iocache_cache_name })
+
+###
+passport.serializeUser (user, done) ->
+    acctpass.serializer(user, done)
+
+passport.deserializeUser (suser, done) ->
+    acctpass.deserializer(suser, done)
+
+passport.use(new LocalStrategy( (username, password, done) ->
+        process.nextTick( ->
+            # do checks here
+            console.log('aloha')
+            acctpass.getuser(username, password, done)
+        )
+))
+###
 
 app.configure ->
     app.use express.static __dirname + '/public'
@@ -23,12 +42,25 @@ app.configure ->
     app.use(express.json())
     app.use(express.methodOverride())
     app.use(express.cookieParser(config.secret))
-    app.use(express.cookieSession({
+    app.use(express.session({
       secret: config.secret
-      key: "mykey"
+      store: app.sessionStore
       cookie: maxAge: 1000*60*60
     }))
+    app.use(passport.initialize())
+    app.use(passport.session())
     app.use(app.router)
+
+app.utility = {}
+app.utility.sendmail = require('drywall-sendmail')
+app.utility.slugify = require('drywall-slugify')
+app.utility.workflow = require('drywall-workflow')
+
+#setup passport
+require('./config/passport')(app, passport)
+synthoptions = {
+    passport: passport
+}
 
 synthify.doapi(app, synthoptions)
 synthify.doroutes(app, synthoptions)

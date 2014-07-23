@@ -9,10 +9,8 @@ var watch = require('gulp-watch');
 var source = require('vinyl-source-stream');
 var fs = require('fs');
 
-var browserify_tasks = [];
-var watchify_tasks = [];
-var less_tasks = [];
-var watch_less_tasks = [];
+var default_tasks = [];
+var dev_tasks = [];
 var resourceStack = [];
 
 config = {
@@ -22,11 +20,10 @@ config = {
 }
 
 function browserify_task(page) {
-    console.log(page);
     var entry = page.entry;
     var dest = page.dest;
     var task = page.entry
-    browserify_tasks.push("b_" + task);
+    default_tasks.push("b_" + task);
     gulp.task("b_" + task, function () {
         var b = browserify(entry);
         b.transform('coffeeify');
@@ -43,7 +40,7 @@ function browserify_task(page) {
         }
         return bundle()
     })
-    watchify_tasks.push("w_" + task);
+    dev_tasks.push("w_" + task);
     gulp.task("w_" + task, function () {
         var b = watchify(entry);
         b.transform('coffeeify');
@@ -61,7 +58,7 @@ function browserify_task(page) {
 }
 function less_task(page) {
     var task = page.entry
-    less_tasks.push(task);
+    default_tasks.push(task);
     gulp.task(task, function () {
         gulp.src(page.entry)
           .pipe(less())
@@ -72,7 +69,7 @@ function less_task(page) {
           .pipe(rename(page.dest.replace('.css', '.min.css')))
           .pipe(gulp.dest(config.cssDir))
     });
-    watch_less_tasks.push("w_" + task);
+    dev_tasks.push("w_" + task);
     gulp.task("w_" + task, function () {
         gulp.src(page.entry)
           .pipe(watch())
@@ -113,6 +110,5 @@ function getPublicDestDir(rootDir, dir) {
   });
 })(config.pagesDir);
 
-
-gulp.task('dev', watchify_tasks.concat(watch_less_tasks))
-gulp.task('default', browserify_tasks.concat(less_tasks))
+gulp.task('dev', dev_tasks)
+gulp.task('default', default_tasks)
