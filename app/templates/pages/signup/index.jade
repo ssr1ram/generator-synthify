@@ -15,7 +15,7 @@ block body
       div.page-header
         h1 Sign Up
       div#signup
-      if oauthTwitter || oauthGitHub || oauthFacebook || oauthGoogle
+      if oauthTwitter || oauthGoogle || oauthFacebook || oauthGoogle
         hr
         p Or sign up using...
         if oauthMessage
@@ -27,21 +27,21 @@ block body
                 a(href='/login/') Login Here
         div.btn-group.btn-group-justified
           if oauthTwitter
-            a.btn.btn-info(href='/signup/twitter/')
+            a.btn.btn-info(href='/login/twitter/')
               i.fa.fa-twitter.fa-lg
               |  Twitter
-          if oauthGitHub
-            a.btn.btn-info(href='/signup/github/')
-              i.fa.fa-github.fa-lg
-              |  GitHub
+          if oauthGoogle
+            a.btn.btn-info(href='/login/google/')
+              i.fa.fa-google.fa-lg
+              |  Google
           if oauthFacebook
-            a.btn.btn-info(href='/signup/facebook/')
+            a.btn.btn-info(href='/login/facebook/')
               i.fa.fa-facebook-square.fa-lg
               |  Facebook
-          if oauthGoogle
-            a.btn.btn-info(href='/signup/google/')
-              i.fa.fa-google-plus-square.fa-lg
-              |  Google
+          if oauthLinkedIn
+            a.btn.btn-info(href='/login/google/')
+              i.fa.fa-linkedin-square.fa-lg
+              |  LinkedIn
     div.col-sm-6.marketing
       div.page-header
         h1 Campy Benefits

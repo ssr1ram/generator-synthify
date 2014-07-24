@@ -4,6 +4,13 @@ Parse.initialize(config.parse_appid, config.parse_jskey)
 bcrypt = require('bcrypt')
 
 User =
+    mini: (usir) ->
+        data =
+            id: usir.id
+            username: usir.get("username")
+            email: usir.get("email")
+            networks: usir.get("networks")
+        return data
     getuser: (username, password, cb) ->
         Usir = Parse.Object.extend("Usir")
         q = new Parse.Query(Usir)
@@ -15,9 +22,7 @@ User =
                     bcrypt.compare(password, usir.get("password"), (err, res) ->
                         if res
                             console.log('got password')
-                            data =
-                                username: usir.get("username")
-                                email: usir.get("email")
+                            data = this.mini(usir)
                         cb(null, data)
                     )
                 else
@@ -44,13 +49,56 @@ User =
               usir.save(null, {
                   success: (usir) ->
                       # text = emt.post_register(usir)
-                      # mg.sendText("dev@teragulp.com", usir.get("email"), "Welcome Web Gatherer!", text)
+                      # mg.sendText("dev@domain.com", usir.get("email"), "Welcome!", text)
                       cb(null, usir.toJSON())
                   error: (e) ->
                       cb(e)
               })
             )
         )
+    createSocial: (network, info, cb) ->
+        Usir = Parse.Object.extend("Usir")
+        usir = new Usir()
+        if network == 'google'
+            usir.set({
+                email: info.profile._json.email
+                networks: ['google']
+                google: info
+            })
+            usir.save(null, {
+                success: (usir) ->
+                    cb(null, this.mini(usir))
+                error: (e) ->
+                    cb(e)
+            })
+    updateSocial: (network, user, info, cb) ->
+        Usir = Parse.Object.extend("Usir")
+        q = new Parse.Query(Usir)
+        self = this
+        q.get(id, {
+            success: (usir) ->
+                if network == 'google'
+                    networks = usir.get("networks") || []
+                    if 'google' not in "networks"
+                        networks.push('google')
+                        usir.set({
+                            networks: networks
+                            google: info
+                        })
+                        usir.save(null, {
+                            success: (usir) ->
+                                cb(null, self.mini(usir))
+                            error: (e) ->
+                                cb(e)
+                        })
+                    else
+                        cb(null, self.mini(usir))
+                else
+                    cb(null, self.mini(usir))
+            error: (err) ->
+                cb(err)
+        })
+
     username_check: (username, cb) ->
         Usir = Parse.Object.extend("Usir")
         q = new Parse.Query(Usir)

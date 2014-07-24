@@ -5,7 +5,7 @@ var User = require("../models/user")
 exports = module.exports = function(app, passport) {
   var LocalStrategy = require('passport-local').Strategy,
       TwitterStrategy = require('passport-twitter').Strategy,
-      GoogleStrategy = require('passport-google-oauth').Strategy,
+      GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
       FacebookStrategy = require('passport-facebook').Strategy,
       LinkedInStrategy = require('passport-linkedin').Strategy;
 
@@ -23,7 +23,7 @@ exports = module.exports = function(app, passport) {
     })
   )
 
-  if (config['twitter-oauth-key']) {
+  if (config['twitter_oauth']) {
     passport.use(new TwitterStrategy({
         consumerKey: config['twitter-oauth-key'],
         consumerSecret: config['twitter-oauth-secret']
@@ -38,11 +38,11 @@ exports = module.exports = function(app, passport) {
     ));
   }
 
-  if (config['google-oauth-key']) {
+  if (config['google_oauth']) {
     passport.use(new GoogleStrategy({
-        clientID: config['google-ouath-key'],
-        clientSecret: config['google-ouath-secret'],
-        callbackURL: "http://localhost:8080/auth/google/callback"
+        clientID: config['google_client_id'],
+        clientSecret: config['google_client_secret'],
+        callbackURL: app.hosturl + "/login/google/callback/"
       },
       function(accessToken, refreshToken, profile, done) {
         done(null, false, {
@@ -54,7 +54,7 @@ exports = module.exports = function(app, passport) {
     ));
   }
 
-  if (config['facebook-oauth-key']) {
+  if (config['facebook_oauth']) {
     passport.use(new FacebookStrategy({
         clientID: config['facebook-oauth-key'],
         clientSecret: config['facebook-oauth-secret']
@@ -68,7 +68,7 @@ exports = module.exports = function(app, passport) {
       }
     ));
   }
-  if (config['linkedin-oauth-key']) {
+  if (config['linkedin_oauth']) {
     passport.use(new LinkedInStrategy({
         consumerKey: config['linkedin-oauth-key'],
         consumerSecret: config['linkedin-oauth-secret'],

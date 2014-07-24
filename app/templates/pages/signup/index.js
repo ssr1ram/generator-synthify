@@ -2,6 +2,7 @@
 var request = require("request");
 var jade = require("jade");
 var User = require("../../models/user");
+var config = require("../../config/config");
 
 var emailT = "" +
 "| Welcome to #{projectName}\n\n" +
@@ -18,7 +19,11 @@ var emailT = "" +
 
 exports.init = function(req, res){
     res.render('signup/index', {
-      oauthMessage: ''
+      oauthMessage: '',
+      oauthLinkedIn: !!config['linkedin_oauth'],
+      oauthTwitter: !!config['twitter_oauth'],
+      oauthGoogle: !!config['google_oauth'],
+      oauthFacebook: !!config['facebook_oauth']
     });
       /*
   if (req.isAuthenticated()) {
@@ -67,6 +72,7 @@ exports.signup = function(req, res){
         username: req.body.username,
         email: req.body.email.toLowerCase(),
         password: req.body.password,
+        networks: ['local']
       }, function(err, user) {
         if (err) {
           return workflow.emit('exception', err);
