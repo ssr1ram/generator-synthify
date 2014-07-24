@@ -1,7 +1,11 @@
 config = require("../../config/config")
+User = require("../../models/user")
 
-renderIndex = (options) ->
-    res.render("login/index.jade", {
+renderIndex = (req, res, options) ->
+    if not options.render
+        options.render = 'login/index.jade'
+
+    res.render(options.render, {
         oauthMessage: options.oauthMessage,
         oauthLinkedIn: !!config['linkedin_oauth'],
         oauthTwitter: !!config['twitter_oauth'],
@@ -11,9 +15,9 @@ renderIndex = (options) ->
 
 module.exports.init = (req, res) ->
     if req.isAuthenticated()
-        res.redirect("/account/")
+        res.redirect("/connect/")
     else
-        renderIndex({oauthMessage: ''})
+        renderIndex(req, res, {oauthMessage: ''})
 
 module.exports.login = (req, res) ->
   workflow = req.app.utility.workflow(req, res)
@@ -55,29 +59,35 @@ module.exports.logout = (req, res) ->
     req.logout()
     res.redirect("/")
 
-module.exports.getGoogle = (req, res) ->
-    options =
-        scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email']
-    if req.param('refresh')
-        options['approvalPrompt'] = 'force'
-        options['accessType'] = 'offline'
-    req._passport.instance.authenticate('google', options )(req, res)
+module.exports.getSocial = (req, res) ->
+    provider = req.param("provider")
+    socprod = require("./providers/" + provider)
+    options = socprod.getOptions(req, res)
+    req._passport.instance.authenticate(provider, options )(req, res)
 
-module.exports.loginGoogle = (req, res, next) ->
-  done = (user) ->
-      req.login(user, (err) ->
-          res.redirect("/")
-      )
-  req._passport.instance.authenticate('google', (err, user, info) ->
-    if err
-        renderIndex({oauthMessage: err})
+module.exports.loginSocial = (req, res, next) ->
+    provider = req.param("provider")
+    try
+        socprod = require("./providers/" + provider)
+    catch e
+        res.redirect("/login/")
         return
-    if req.user
-        User.updateSocial('google', req.user, info, (user) ->
-            done(user)
+    req._passport.instance.authenticate(provider, (err, user, info) ->
+      if err
+        renderIndex(req, res, {oauthMessage: err})
+        return
+      socprod.setUser(req, res, info, (err, user) ->
+        if (err)
+          console.log('have error')
+          console.log(err)
+          res.redirect("/")
+        req.login(user, (err) ->
+          res.redirect("/")
         )
-    else
-        User.createSocial('google', info, (user) ->
-            done(user)
-        )
-  )(req, res, next)
+      )
+    )(req, res, next)
+
+
+module.exports.connect = (req, res, next) ->
+    console.log(req.user)
+    renderIndex(req, res, {oauthMessage:'', render: 'login/connect.jade'})

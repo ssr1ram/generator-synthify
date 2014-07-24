@@ -1,0 +1,24 @@
+if oauthTwitter || oauthGoogle || oauthFacebook || oauthGoogle
+  if oauthMessage
+    div.alerts
+      div.alert.alert-info.alert-dismissable
+        button.close(type='button', data-dismiss='alert') &times;
+        |#{oauthMessage}&nbsp;
+  div.btn-group.btn-group-justified
+    if oauthTwitter
+      a.btn.btn-info(href='/login/twitter/')
+        i.fa.fa-twitter.fa-lg
+        |  Twitter
+    if oauthGoogle
+      a.btn.btn-google(href='/login/google/')
+        i.fa.fa-google.fa-lg
+        |  Google
+    if oauthFacebook
+      a.btn.btn-facebook(href='/login/facebook/')
+        i.fa.fa-facebook-square.fa-lg
+        |  Facebook
+    if oauthLinkedIn
+      a.btn.btn-info(href='/login/linkedin/')
+        i.fa.fa-linkedin-square.fa-lg
+        |  LinkedIn
+  hr

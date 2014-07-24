@@ -18,23 +18,17 @@ var emailT = "" +
 "| #{projectName}";
 
 exports.init = function(req, res){
-    res.render('signup/index', {
-      oauthMessage: '',
-      oauthLinkedIn: !!config['linkedin_oauth'],
-      oauthTwitter: !!config['twitter_oauth'],
-      oauthGoogle: !!config['google_oauth'],
-      oauthFacebook: !!config['facebook_oauth']
-    });
-      /*
-  if (req.isAuthenticated()) {
-    res.redirect(req.user.defaultReturnUrl());
-  }
-  else {
-    res.render('signup/index', {
-      oauthMessage: ''
-    });
-  }
-  */
+    if (req.isAuthenticated()) {
+        res.redirect("/connect/")
+    } else {
+        res.render('login/signup', {
+        oauthMessage: '',
+        oauthLinkedIn: !!config['linkedin_oauth'],
+        oauthTwitter: !!config['twitter_oauth'],
+        oauthGoogle: !!config['google_oauth'],
+        oauthFacebook: !!config['facebook_oauth']
+        });
+    }
 };
 
 exports.signup = function(req, res){

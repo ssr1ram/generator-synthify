@@ -11,42 +11,12 @@ block feet
 
 block body
   div.row
-    div.col-sm-6
+    div.col-sm-6.col-sm-offset-3
       div.page-header
         h1 Sign In
-      if oauthTwitter || oauthGoogle || oauthFacebook || oauthLinkedIn
-        if oauthMessage
-          div.alerts
-            div.alert.alert-info.alert-dismissable
-              button.close(type='button', data-dismiss='alert') &times;
-              |#{oauthMessage}&nbsp;
-              b
-                a(href='/signup/') Sign Up Here
-        div.btn-group.btn-group-justified(style='margin:40px 20px')
-          if oauthTwitter
-            a.btn.btn-info(href='/login/twitter/')
-              i.fa.fa-twitter.fa-lg
-              |  Twitter
-          if oauthGoogle
-            a.btn.btn-goog(href='/login/google/')
-              i.fa.fa-google.fa-lg
-              |  Google
-          if oauthFacebook
-            a.btn.btn-info(href='/login/facebook/')
-              i.fa.fa-facebook-square.fa-lg
-              |  Facebook
-          if oauthLinkedIn
-            a.btn.btn-primary.btn-lg(href='/login/linkedin/')
-              i.fa.fa-linkedin-square.fa-lg
-              |  Login with LinkedIn
-        hr
+      include social
       p Or Login with a password ...
       div#login(style='background-color:#f0f0f0;padding:20px;border-radius:10px')
-    div.col-sm-6.marketing
-      div.page-header
-        h1 Welcome Back
-      p.lead We've missed you :-)
-      i.fa.fa-backward.super-awesome
 
   script(type='text/template', id='tmpl-login')
     form

@@ -11,6 +11,16 @@ module.exports = {
     iocache_token: "fill-in",
     iocache_project_id: "fill-in",
     iocache_cache_name: "fill-in",
+    google_oauth: false,
     google_client_id: "fill-in",
-    google_client_secret: "fill-in"
+    google_client_secret: "fill-in",
+    facebook_oauth: false,
+    facebook_app_id: "fill-in",
+    facebook_app_secret: "fill-in",
+    twitter_oauth: false,
+    twitter_api_key: "fill-in",
+    twitter_api_secret: "fill-in",
+    linkedin_oauth: false,
+    linkedin_api_key: "fill-in",
+    linkedin_api_secret: "fill-in"
 }

@@ -7,46 +7,16 @@ block neck
   link(rel='stylesheet', href='/css/login/index.min.css?#{cacheBreaker}')
 
 block feet
-  script(src='/js/signup/index.js?#{cacheBreaker}')
+  script(src='/js/login/signup.js?#{cacheBreaker}')
 
 block body
   div.row
-    div.col-sm-6
+    div.col-sm-6.col-sm-offset-3
       div.page-header
         h1 Sign Up
-      div#signup
-      if oauthTwitter || oauthGoogle || oauthFacebook || oauthGoogle
-        hr
-        p Or sign up using...
-        if oauthMessage
-          div.alerts
-            div.alert.alert-info.alert-dismissable
-              button.close(type='button', data-dismiss='alert') &times;
-              |#{oauthMessage}&nbsp;
-              b
-                a(href='/login/') Login Here
-        div.btn-group.btn-group-justified
-          if oauthTwitter
-            a.btn.btn-info(href='/login/twitter/')
-              i.fa.fa-twitter.fa-lg
-              |  Twitter
-          if oauthGoogle
-            a.btn.btn-info(href='/login/google/')
-              i.fa.fa-google.fa-lg
-              |  Google
-          if oauthFacebook
-            a.btn.btn-info(href='/login/facebook/')
-              i.fa.fa-facebook-square.fa-lg
-              |  Facebook
-          if oauthLinkedIn
-            a.btn.btn-info(href='/login/google/')
-              i.fa.fa-linkedin-square.fa-lg
-              |  LinkedIn
-    div.col-sm-6.marketing
-      div.page-header
-        h1 Campy Benefits
-      p.lead Really, you will love it inside. It's super great!
-      i.fa.fa-thumbs-o-up.super-awesome
+      include ./social.jade
+      p Or signup with an email and password ...
+      div#signup(style='background-color:#f0f0f0;padding:20px;border-radius:10px')
 
   script(type='text/template', id='tmpl-signup')
     form

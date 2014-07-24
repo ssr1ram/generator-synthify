@@ -25,8 +25,9 @@ exports = module.exports = function(app, passport) {
 
   if (config['twitter_oauth']) {
     passport.use(new TwitterStrategy({
-        consumerKey: config['twitter-oauth-key'],
-        consumerSecret: config['twitter-oauth-secret']
+        consumerKey: config['twitter_api_key'],
+        consumerSecret: config['twitter_api_secret'],
+        callbackURL: app.hosturl + "/login/twitter/callback/"
       },
       function(token, tokenSecret, profile, done) {
         done(null, false, {
@@ -56,8 +57,9 @@ exports = module.exports = function(app, passport) {
 
   if (config['facebook_oauth']) {
     passport.use(new FacebookStrategy({
-        clientID: config['facebook-oauth-key'],
-        clientSecret: config['facebook-oauth-secret']
+        clientID: config['facebook_app_id'],
+        clientSecret: config['facebook_app_secret'],
+        callbackURL: app.hosturl + "/login/facebook/callback/"
       },
       function(accessToken, refreshToken, profile, done) {
         done(null, false, {
@@ -70,8 +72,9 @@ exports = module.exports = function(app, passport) {
   }
   if (config['linkedin_oauth']) {
     passport.use(new LinkedInStrategy({
-        consumerKey: config['linkedin-oauth-key'],
-        consumerSecret: config['linkedin-oauth-secret'],
+        consumerKey: config['linkedin_api_key'],
+        consumerSecret: config['linkedin_api_secret'],
+        callbackURL: app.hosturl + "/login/linkedin/callback/",
         profileFields: ['id', 'first-name', 'last-name', 'email-address', 'headline', 'picture-url', 'picture-urls::(original)', 'public-profile-url']
       },
       function(accessToken, refreshToken, profile, done) {

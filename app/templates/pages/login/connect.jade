@@ -1,0 +1,17 @@
+extends ../layouts/default
+
+block head
+  title Connect accounts
+
+block neck
+  link(rel='stylesheet', href='/css/login/index.min.css?#{cacheBreaker}')
+
+block feet
+  // script(src='/js/login/signup.js?#{cacheBreaker}')
+
+block body
+  div.row
+    div.col-sm-6.col-sm-offset-3
+      div.page-header
+        h1 Connect your accounts
+      include ./social
