@@ -1,3 +1,3 @@
 exports.getIndex = function(req, res) {
-    res.send({"aloha": "from hawaii"});
+    res.send({"aloha": "from synthify"});
 }

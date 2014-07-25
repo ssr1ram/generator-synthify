@@ -10,7 +10,8 @@ ensureAuthenticated = (req, res, next) ->
 module.exports.route = (app, opts) ->
     pages = require('./pages')
     app.get("/", pages.getIndex)
-    app.get("/foo", ensureAuthenticated, pages.getFoo)
+    app.get("/foo", pages.getFoo)
+    app.get("/isfoo", ensureAuthenticated, pages.getFoo)
     app.get("/bar", pages.getBar)
     app.get("/account/", pages.getBar)
 

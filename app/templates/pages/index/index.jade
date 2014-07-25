@@ -11,15 +11,18 @@ block body
         a(href='/login/') Login
       li
         a(href='/signup/') Signup
-  h3 Routes
-    ul
-      li
-        a(href='/api/foo') /api/foo
-        | This route is auto synthified based on entries in the api directory
-      li
-        a(href='/foo') /foo
-        | This route does an api preLoad call to /api/foo - see pages/pages.coffee
-      li
-        a(href='/bar') /bar
-        | This route is defined in pages/route.coffee
+  h3 Or check these routes
+  ul
+    li
+      a(href='/api/foo') /api/foo
+      | &nbsp; This route is auto synthified based on entries in the api directory
+    li
+      a(href='/foo') /foo
+      | &nbsp; This route does an api preLoad call to /api/foo - see pages/pages.coffee
+    li
+      a(href='/isfoo') /isfoo
+      | &nbsp; This route requires you to be logged in
+    li
+      a(href='/bar') /bar
+      | &nbsp; This route is defined in pages/route.coffee
 block footer
