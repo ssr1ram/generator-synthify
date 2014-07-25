@@ -6,7 +6,7 @@
   "dependencies": {
     "express": "~3.4.4",
     "coffee-script": "~1.7.1",
-    "synthify": "git+https://github.com/ssr1ram/synthify.git",
+    "synthify": ">= 0.0.0",
     "passport": "~0.2.0",
     "passport-local": "~0.1.6",
     "passport-twitter": ">= 0.0.0",

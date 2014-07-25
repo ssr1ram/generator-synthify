@@ -15,7 +15,7 @@ $ npm install -g yo
 
 
 ```bash
-$ npm install -g git+https://github.com/ssr1ram/generator-synthify.git
+$ npm install -g generator-synthify
 ```
 
 ### initiate the generator:
