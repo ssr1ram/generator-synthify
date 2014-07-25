@@ -26,7 +26,7 @@ $ cd project
 $ yo synthify
 ```
 
-### configure app & run
+### configure app
 
 * Rename config.rename.js to config.js
 * Required entries
@@ -37,8 +37,13 @@ $ yo synthify
   * mailgun - for email
 * Optional
   * oauth developer apps for twitter, facebook, google & linkedin
-* Run
-  * NODE_ENV=development node server.js
+
+### run app
+
+```bash
+$ NODE_ENV=development node server.js
+$ open http://localhost:3000
+```
 
 ### understand the directory structure
 
