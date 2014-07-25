@@ -11,27 +11,12 @@ cacheBreaker = new Date().getTime()
 
 app.use( (req, res, next) ->
     res.locals.cacheBreaker = cacheBreaker
+    res.locals.req = req
     next()
 )
 
-# app.sessionStore = new parseStore({ appid: config.parse.appid, jskey: config.parse.jskey })
 app.sessionStore = new iocacheStore({ hosts: config.iocache_hosts, token: config.iocache_token, project_id: config.iocache_project_id, cache_name: config.iocache_cache_name })
 
-###
-passport.serializeUser (user, done) ->
-    acctpass.serializer(user, done)
-
-passport.deserializeUser (suser, done) ->
-    acctpass.deserializer(suser, done)
-
-passport.use(new LocalStrategy( (username, password, done) ->
-        process.nextTick( ->
-            # do checks here
-            console.log('aloha')
-            acctpass.getuser(username, password, done)
-        )
-))
-###
 
 app.use express.static __dirname + '/public'
 app.set('views', __dirname + '/pages')

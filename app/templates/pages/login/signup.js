@@ -2,6 +2,7 @@
 var request = require("request");
 var jade = require("jade");
 var User = require("../../models/user");
+var Email = require("../../config/email");
 var config = require("../../config/config");
 
 var emailT = "" +
@@ -73,8 +74,27 @@ exports.signup = function(req, res){
         }
 
         workflow.user = user;
-        workflow.emit('logUserIn');
+        workflow.emit('sendWelcomeEmail');
       });
+  });
+
+  workflow.on('sendWelcomeEmail', function() {
+    var fn = jade.compile(emailT);
+    var locals = {
+      username: req.body.username,
+      email: req.body.email,
+      loginURL: 'http://'+ req.headers.host +'/login/',
+      projectName: req.app.get('project-name')
+    };
+    var text = fn(locals);
+    var options = {
+      "to": req.body.email,
+      "subject": 'Your '+ req.app.get('project-name') +' Account',
+      "text": text || "No body here",
+    }
+    Email.sendMail(options, function () {
+      workflow.emit('logUserIn');
+    });
   });
 
   workflow.on('logUserIn', function() {
@@ -90,7 +110,6 @@ exports.signup = function(req, res){
       }
       else {
         req.login(user, function(err) {
-            console.log(err);
           if (err) {
             return workflow.emit('exception', err);
           }

@@ -10,7 +10,7 @@
     defaults: {
       errors: [],
       errfor: {},
-      username: '',
+      email: '',
       password: ''
     }
   });
@@ -30,7 +30,7 @@
     },
     render: function() {
       this.$el.html(this.template( this.model.attributes ));
-      this.$el.find('[name="username"]').focus();
+      this.$el.find('[name="email"]').focus();
     },
     preventSubmit: function(event) {
       event.preventDefault();
@@ -45,12 +45,12 @@
       this.$el.find('.btn-login').attr('disabled', true);
 
       this.model.save({
-        username: this.$el.find('[name="username"]').val(),
+        email: this.$el.find('[name="email"]').val(),
         password: this.$el.find('[name="password"]').val()
       },{
         success: function(model, response) {
           if (response.success) {
-            location.href = '/login/';
+            location.href = '/';
           }
           else {
             model.set(response);

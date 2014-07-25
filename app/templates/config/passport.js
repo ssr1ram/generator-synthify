@@ -9,9 +9,11 @@ exports = module.exports = function(app, passport) {
       FacebookStrategy = require('passport-facebook').Strategy,
       LinkedInStrategy = require('passport-linkedin').Strategy;
 
-  passport.use(new LocalStrategy(
-    function(username, password, done) {
-      User.getuser(username, password, function(err, user) {
+  passport.use(new LocalStrategy({
+      usernameField: 'email'
+    },
+    function(email, password, done) {
+      User.getuser(email, password, function(err, user) {
         if (err) {
           return done(err);
         }

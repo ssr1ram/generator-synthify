@@ -23,8 +23,11 @@ module.exports.login = (req, res) ->
   workflow = req.app.utility.workflow(req, res)
 
   workflow.on('validate', () ->
-    if !req.body.username
-      workflow.outcome.errfor.username = 'required'
+    if !req.body.email
+      workflow.outcome.errfor.email = 'required'
+    else if !/^[a-zA-Z0-9\-\_\.\+]+@[a-zA-Z0-9\-\_\.]+\.[a-zA-Z0-9\-\_]+$/.test(req.body.email)
+      console.log('email err')
+      workflow.outcome.errfor.email = 'invalid email format'
 
     if !req.body.password
       workflow.outcome.errfor.password = 'required'
@@ -41,13 +44,13 @@ module.exports.login = (req, res) ->
         return workflow.emit('exception', err)
 
       if !user
-        workflow.outcome.errors.push('Username and password combination not found or your account is inactive.')
+        workflow.outcome.errors.push('email and password combination not found or your account is inactive.')
         return workflow.emit('response')
       else
         req.login(user, (err) ->
           if err
             return workflow.emit('exception', err)
-          workflow.emit('response')
+          return workflow.emit('response')
         )
     )(req, res)
   )
@@ -89,5 +92,4 @@ module.exports.loginSocial = (req, res, next) ->
 
 
 module.exports.connect = (req, res, next) ->
-    console.log(req.user)
     renderIndex(req, res, {oauthMessage:'', render: 'login/connect.jade'})

@@ -17,6 +17,7 @@
     "cookie-sessions": ">= 0.0.0",
     "request": ">= 0.0.0",
     "memcached": ">= 0.0.0",
+    "mailgun": ">= 0.0.0",
     "parse": ">= 0.0.0"
   },
   "devDependencies": {

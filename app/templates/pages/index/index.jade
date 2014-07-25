@@ -1,11 +1,17 @@
 extends ../layouts/default
 block body
   h2 Welcome to Synthify
-  ul
-    li
-      a(href='/foo') /foo
-    li
-      a(href='/bar') /bar
-    li
-      a(href='/api/foo') /api/foo
+  if req.user
+    pre !{JSON.stringify(req.user)}
+    ul
+      li
+        a(href='/logout/') Logout
+      li
+        a(href='/connect/') Connect
+  else
+    ul
+      li
+        a(href='/login/') Login
+      li
+        a(href='/signup/') Signup
 block footer
