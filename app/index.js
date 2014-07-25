@@ -32,20 +32,24 @@ var SynthifyGenerator = yeoman.generators.Base.extend({
     var prompts = [
         {
             type: 'confirm',
-            name: 'dousers',
-            message: 'Would you like a user system?',
+            name: 'doit',
+            message: 'Create a synthify app in this directory?',
             default: true
         }
     ];
 
     this.prompt(prompts, function (props) {
-      this.dousers = props.dousers;
+      this.doit = props.doit;
 
       done();
     }.bind(this));
   },
 
   app: function () {
+    if (!this.doit) {
+        this.log(yosay('Leaving..'));
+        process.exit()
+    }
     var pkg = this.src.readJSON('package.json');
     this.dest.write('package.json', JSON.stringify(pkg, null, 2));
     this.copy('gulpfile.js', 'gulpfile.js');
@@ -57,18 +61,12 @@ var SynthifyGenerator = yeoman.generators.Base.extend({
   projectfiles: function () {
     this.copy('editorconfig', '.editorconfig');
     this.copy('jshintrc', '.jshintrc');
-    this.directory('node_modules', 'node_modules');
+    this.directory('_node_modules', 'node_modules');
     this.directory('api', 'api');
     this.directory('config', 'config');
     this.directory('models', 'models');
     this.directory('pages', 'pages');
     this.directory('public', 'public');
-    /*
-    if (this.dousers) {
-        this.directory('pages/layouts', 'pages/layouts');
-        this.directory('pages/login', 'pages/login');
-    }
-    */
     this.copy('connect-iocache.js', 'connect-iocache.js');
     this.copy('app.coffee', 'app.coffee');
     this.copy('server.js', 'server.js');
