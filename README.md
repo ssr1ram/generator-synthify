@@ -1,29 +1,24 @@
-# generator-synthify [![Build Status](https://secure.travis-ci.org/ssr1ram/generator-synthify.png?branch=master)](https://travis-ci.org/ssr1ram/generator-synthify)
+# generator-synthify
 
 > [Yeoman](http://yeoman.io) generator
 
 
 ## Getting Started
 
-### What is Yeoman?
-
-Not every new computer comes with a Yeoman pre-installed. He lives in the [npm](https://npmjs.org) package repository. You only have to ask for him once, then he packs up and moves into your hard drive. *Make sure you clean up, he likes new and shiny things.*
+### install yeoman
 
 ```bash
 $ npm install -g yo
 ```
 
-### Yeoman Generators
+### install this generator
 
-Yeoman travels light. He didn't pack any generators when he moved in. You can think of a generator like a plug-in. You get to choose what type of application you wish to create, such as a Backbone application or even a Chrome extension.
-
-To install generator-synthify from npm, run:
 
 ```bash
 $ npm install -g git+https://github.com/ssr1ram/generator-synthify.git
 ```
 
-Finally, initiate the generator:
+### initiate the generator:
 
 ```bash
 $ mkdir project
@@ -31,10 +26,7 @@ $ cd project
 $ yo synthify
 ```
 
-### Getting started on the app
-
-After yeoman has generated the skeleton app, installed node modules and
-run gulp, you should.
+### configure app & run
 
 * Rename config.rename.js to config.js
 * Required entries
@@ -48,7 +40,7 @@ run gulp, you should.
 * Run
   * NODE_ENV=development node server.js
 
-### Directory structure
+### understand the directory structure
 
 * api
   * see http://github.com/ssr1ram/synthify for documentation on how to
