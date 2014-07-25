@@ -2,16 +2,24 @@ extends ../layouts/default
 block body
   h2 Welcome to Synthify
   if req.user
+    div Logged in user details:
     pre !{JSON.stringify(req.user)}
-    ul
-      li
-        a(href='/logout/') Logout
-      li
-        a(href='/connect/') Connect
   else
+    div You can crete an account
     ul
       li
         a(href='/login/') Login
       li
         a(href='/signup/') Signup
+  h3 Routes
+    ul
+      li
+        a(href='/api/foo') /api/foo
+        | This route is auto synthified based on entries in the api directory
+      li
+        a(href='/foo') /foo
+        | This route does an api preLoad call to /api/foo - see pages/pages.coffee
+      li
+        a(href='/bar') /bar
+        | This route is defined in pages/route.coffee
 block footer

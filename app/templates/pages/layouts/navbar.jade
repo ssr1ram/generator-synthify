@@ -6,27 +6,33 @@ div.navbar-collapse.my-navbar-collapse.collapse
     li
       a(href='#') Synthify
   ul.nav.navbar-nav.pull-right
-    if user && user.username
       li
-        a(href="#") have user
-      li
-        a(href='/help')
+        a(href='#')
           | help
-    else
-      li.dropdown
-        a.dropdown-toggle(data-toggle='dropdown')
-          span(style='margin-right:5px')  About
-          b.caret
-        ul.dropdown-menu
-          li
-            a(href='#')
-              |  News
-          li
-            a(href='#')
-              |  Press
-          li
-            a(href='#')
-              |  About
-      li: a(href='/signup/')
-        i.fa.fa-user
-        |  Get on Board
+      if req.user
+        li.dropdown
+          a.dropdown-toggle(data-toggle='dropdown')
+            if req.user.username
+              span(style='margin-right:5px') #{req.user.username}
+            else
+              span(style='margin-right:5px') #{req.user.email}
+            b.caret
+          ul.dropdown-menu
+            li
+              a(href='/connect/')
+                |  Connect Accounts
+            li
+              a(href='/logout/')
+                |  Logout
+      else
+        li.dropdown
+          a.dropdown-toggle(data-toggle='dropdown')
+            span(style='margin-right:5px')  Get on board
+            b.caret
+          ul.dropdown-menu
+            li
+              a(href='/login/')
+                |  Login
+            li
+              a(href='/signup/')
+                |  Signup
