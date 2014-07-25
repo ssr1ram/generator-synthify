@@ -36,10 +36,10 @@ app.use(passport.session())
 app.use(app.router)
 
 app.configure('development', ->
-    app.hosturl = "http://localhost:3000" # needed for passport-google-oauth
+    app.hosturl = "http://localhost:" + config.port # needed for passport-google-oauth
 )
 app.configure('production', ->
-    app.hosturl = config.hosturl # needed for passport-google-oauth
+    app.hosturl = config.hosturl # needed for passport oauth
 )
 
 app.utility = {}
@@ -56,6 +56,6 @@ synthoptions = {
 synthify.doapi(app, synthoptions)
 synthify.doroutes(app, synthoptions)
 
-server = app.listen(3000, ->
+server = app.listen(config.port, ->
     console.log('Listening on port %d', server.address().port)
 )

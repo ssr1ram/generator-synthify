@@ -14,4 +14,7 @@ block body
     div.col-sm-6.col-sm-offset-3
       div.page-header
         h1 Connect your accounts
-      include ./social
+      if oauthTwitter || oauthGoogle || oauthFacebook || oauthGoogle
+        include ./social
+      else
+        div No social accounts configured

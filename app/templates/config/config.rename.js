@@ -2,7 +2,7 @@
 module.exports = {
     project_name: "synthify",
     hosturl: "http://your.domain.com",
-    port: process.env.PORT || 4004,
+    port: process.env.PORT || 3000,
     secret: "changeme",
 
     // parse

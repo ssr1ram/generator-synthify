@@ -84,12 +84,12 @@ exports.signup = function(req, res){
       username: req.body.username,
       email: req.body.email,
       loginURL: 'http://'+ req.headers.host +'/login/',
-      projectName: req.app.get('project-name')
+      projectName: config.project_name
     };
     var text = fn(locals);
     var options = {
       "to": req.body.email,
-      "subject": 'Your '+ req.app.get('project-name') +' Account',
+      "subject": 'Your '+ config.project_name +' Account',
       "text": text || "No body here",
     }
     Email.sendMail(options, function () {
